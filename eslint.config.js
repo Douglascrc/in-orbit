@@ -18,7 +18,6 @@ export default tseslint.config(
       'react-refresh': reactRefresh,
     },
     rules: {
-      'allowConstantExport': true,
       'semi': ['error', 'always'],
       'quotes': ['error', 'single'],
       'indent': ['error', 2],  
