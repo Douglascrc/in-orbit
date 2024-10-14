@@ -7,6 +7,8 @@ import { SheetClose, SheetContent, SheetDescription, SheetHeader } from './ui/sh
 import { Label } from './ui/label';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { z } from 'zod';
+import { createGoal } from '@/http/create-goal';
+import { useQueryClient } from '@tanstack/react-query';
 
 const createGoalForm = z.object({
   title: z.string().min(1,'informe a atividade a realizar'),
@@ -15,16 +17,24 @@ const createGoalForm = z.object({
 
 type CreateGoalForm = z.infer<typeof createGoalForm>
 
-
 export function CreateGoal() {
-  const { register, control, handleSubmit, formState } = useForm<CreateGoalForm>({
+  const queryClient = useQueryClient();
+
+  const { register, control, handleSubmit, formState, reset } = useForm<CreateGoalForm>({
     resolver: zodResolver(createGoalForm)
   });
 
-  function handleCreateGoal(data:CreateGoalForm) {
+  async function handleCreateGoal(data:CreateGoalForm) {
     console.log(data);
+    await createGoal(data);
+
+    queryClient.invalidateQueries({queryKey:['pending-goals']});
+    queryClient.invalidateQueries({queryKey:['summary']});
+
+    reset();
   }
 
+          
   return(
     
     <><SheetContent>
@@ -48,18 +58,21 @@ export function CreateGoal() {
               <Label htmlFor='title'>Qual a atividade?</Label>
               <Input id='title' autoFocus placeholder='Correr 5km, meditar...' 
                 {...register('title')}/>
+
+              {formState.errors.title?.message && (
+                <p className='text-red-400 text-sm'>
+                  {formState.errors.title.message}
+                </p> 
+              )}
             </div>
 
-            {formState.errors.title?.message && (
-              <p className='text-red-400 text-sm'>
-                {formState.errors.title.message}
-              </p> 
-            )}
+            
             <div className='flex flex-col gap-5'>
               <Label htmlFor='times'>Quantas vezes por semana?</Label>
               <Controller
                 control={control}
                 name='weeklyFrequency'
+                defaultValue={3}
                 render={({field}) => {
                   return (
                     <RadioGroup onValueChange={field.onChange} value={String(field.value)} >
@@ -95,7 +108,7 @@ export function CreateGoal() {
                         <span>🤯</span>
                       </div>
                       <div className='flex items-center gap-2 bg-black justify-between py-2 px-2 rounded-xl hover:bg-purple-400/80 border-purple-500 border hover:border-white hover:border-2 '>
-                        <RadioGroupItem value="6" id="option-six" />
+                        <RadioGroupItem value="7" id="option-seven" />
                         <span className='text-zinc-388 text-sm font-medium leading-none'
                         >Todos os dias da semana</span>
                         <span>🔥</span>
