@@ -1,50 +1,74 @@
-# React + TypeScript + Vite
+# In.Orbit Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esta é a interface do cliente do projeto **In.Orbit**, construída com React, TypeScript e Vite. A aplicação consome a API do backend para gerenciar e exibir metas pessoais e profissionais.
 
-Currently, two official plugins are available:
+Abaixo, um exemplo da tela de cadastro de meta:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Tela de Cadastro de Meta](./src/assets/interface.jpg)
 
-## Expanding the ESLint configuration
+## Tecnologias Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Framework:** React
+- **Linguagem:** TypeScript
+- **Build Tool:** Vite
+- **Estilização:** Tailwind CSS
+- **Gerenciamento de Estado:** React Query
+- **Outras Dependências:**  
+  - Radix UI (componentes acessíveis)
+  - React Hook Form e Zod (validação de formulários)
+  - Lucide Icons
 
-- Configure the top-level `parserOptions` property like this:
+## Estrutura do Projeto
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+.
+├── public/
+│   └── icon.svg
+├── src/
+│   ├── assets/         # Imagens e ícones (ex.: interface.jpg)
+│   ├── components/     # Componentes reutilizáveis (ex.: Summary, CreateGoal, PendingGoals, EmptyGoals)
+│   │   └── ui/         # Componentes de UI (Button, Input, Label, etc.)
+│   ├── http/           # Funções para chamadas à API (ex.: create-goal, get-summary)
+│   ├── lib/            # Utilitários e helpers (ex.: funções para manipulação de classes)
+│   ├── App.tsx         # Componente principal
+│   ├── index.css       # Estilos globais via Tailwind
+│   └── main.tsx        # Ponto de entrada da aplicação
+├── index.html
+├── package.json
+├── tailwind.config.js
+└── README.md         # Este arquivo
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Instalação
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. Certifique-se de ter o [Node.js](https://nodejs.org/) instalado.
+2. Clone o repositório (se ainda não o fez):
+   ```bash
+   git clone https://github.com/Douglascrc/in-orbit.git
+   cd in-orbit/frontend
+   ```
+3. Instale as dependências:
+   ```bash
+   npm install
+   ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+## Executando a Aplicação
+
+Inicie a aplicação com Vite:
+```bash
+npm run dev
 ```
+A aplicação estará disponível em [http://localhost:5173](http://localhost:5173).
+
+## Configurações Adicionais
+
+- **Tailwind CSS:** Configuração disponível em `tailwind.config.js` e `postcss.config.js`.
+- **Rotas e Consumo da API:**  
+  As requisições para o backend (ex.: `http://localhost:3333/`) estão definidas na pasta `src/http`.
+
+## Scripts Úteis
+
+- `npm run dev` — Inicia a aplicação em modo de desenvolvimento.
+- `npm run build` — Compila a aplicação para produção.
+- `npm run lint` — Executa o ESLint para identificar problemas no código.
+- `npm run preview` — Visualiza a versão de produção localmente.
