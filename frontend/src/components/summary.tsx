@@ -23,7 +23,7 @@ export function Summary() {
   if(!data) {
     return null;
   }
-  // const goalsPerDay = data?.goalsPerDay || {};
+  const goalsPerDay = data?.goalsPerDay || {};
 
   const firstDayOfWeek = dayjs().startOf('week').format('D MMM');
 
@@ -62,7 +62,7 @@ export function Summary() {
       <div className='flex flex-col gap-3'>
         <h2 className='text-xl font-medium'>Sua semana</h2>
        
-        {Object.entries(data.goalsPerDay).map(([date,goals]) => {
+        {Object.entries(goalsPerDay).map(([date,goals]) => {
           const weekDay = dayjs(date).format('dddd');
           const formatDate = dayjs(date).format('D [de] MMMM');
 
